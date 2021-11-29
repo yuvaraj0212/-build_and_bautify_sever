@@ -1,6 +1,7 @@
 package com.webrixtec.buildandbeautify.repo;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
 
@@ -19,6 +20,7 @@ public interface UserRepo extends JpaRepository<UserModel, Long> {
 	UserModel findByEmail(String email);
 
 	boolean existsByEmail(String email);
+
 
 
 	

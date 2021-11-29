@@ -1,25 +1,11 @@
-package com.webrixtec.buildandbeautify.model;
+package com.webrixtec.buildandbeautify.pojo;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
-
-@Entity
-@Table(name="login_client_Model")
-public class loginCleintModel {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-		@ManyToOne(fetch = FetchType.EAGER)
-		@JoinColumn(name = "clientId", nullable = false, referencedColumnName = "id")
-	private UserModel userModel;
+public class clientdashboardRequest {
+	
+	
+	private Long clientId;
 	@NotEmpty(message="Complaint must not to be null")
 	private String complaint;
 	@NotEmpty(message="comment must not to be null")
@@ -32,22 +18,24 @@ public class loginCleintModel {
 	private String quantity;
 	@NotEmpty(message="other must not to be null")
 	private String other;
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	
+	public Long getClientId() {
+		return clientId;
+	}
+	public void setClientId(Long clientId) {
+		this.clientId = clientId;
+	}
 	public String getComplaint() {
 		return complaint;
 	}
-	
-	public UserModel getUserModel() {
-		return userModel;
+	public void setComplaint(String complaint) {
+		this.complaint = complaint;
 	}
-	public void setUserModel(UserModel userModel) {
-		this.userModel = userModel;
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 	public String getCategory() {
 		return category;
@@ -67,24 +55,11 @@ public class loginCleintModel {
 	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
-	public void setComplaint(String complaint) {
-		this.complaint = complaint;
-	}
-	public String getComment() {
-		return comment;
-	}
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-	
 	public String getOther() {
 		return other;
 	}
 	public void setOther(String other) {
 		this.other = other;
 	}
-	
-
-	
 	
 }
