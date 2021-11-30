@@ -1,5 +1,9 @@
 package com.webrixtec.buildandbeautify.service;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +36,12 @@ public class loginClientService extends ExceptionController{
 		LCM.setOther(productRequest.getOther());
 		LCR.save(LCM);
 		return response(HttpStatus.OK.value(), "Enquiry added Succcessfully", LCM);
+	}
+
+	public ResponseEntity<Object> getEnquiry() {
+		List<loginCleintModel> enquirys = LCR.findAll();
+		Collections.reverse( enquirys);
+		return response(HttpStatus.OK.value(), "enquirys list", enquirys); 
 	}
 
 }

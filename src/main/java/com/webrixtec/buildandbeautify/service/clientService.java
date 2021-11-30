@@ -74,7 +74,7 @@ public class clientService extends ExceptionController {
 	public ResponseEntity<Object> getProductList() {
 		List<clientModel> productList = clientRepo.findAll();
 		Collections.reverse(productList);
-		return response(HttpStatus.OK.value(), "product list", productList);
+		return response(HttpStatus.OK.value(), "client list", productList);
 	}
 
 
