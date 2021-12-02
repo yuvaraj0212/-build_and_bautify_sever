@@ -2,10 +2,20 @@ package com.webrixtec.buildandbeautify;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+
+
+
+
 
 @SpringBootApplication
-public class BuildAndBautifySeverApplication {
+public class BuildAndBautifySeverApplication extends SpringBootServletInitializer{
 
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(BuildAndBautifySeverApplication.class);
+    }
 	public static void main(String[] args) {
 		SpringApplication.run(BuildAndBautifySeverApplication.class, args);
 	}

@@ -9,9 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.buidAndbeautify</groupId>
-	<artifactId>-build_and_bautify_sever</artifactId>
+	<artifactId>build_and_bautify_sever</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>-build_and_bautify_sever</name>
+	<packaging>war</packaging>
+	<name>build_and_bautify_sever</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
