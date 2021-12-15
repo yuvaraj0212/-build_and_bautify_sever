@@ -4,11 +4,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -54,7 +58,7 @@ public class UserService extends ExceptionController {
 		return response(HttpStatus.OK.value(), " login successfully", user);
 	}
 
-	public ResponseEntity<Object> signUp(UserModel userModel) {
+	public ResponseEntity<Object> signUp(UserModel userModel) throws MessagingException {
 		UserModel userDetails = new UserModel();
 		boolean emailExists = userRepo.existsByEmail(userModel.getEmail());
 		if (emailExists) {
@@ -82,17 +86,28 @@ public class UserService extends ExceptionController {
 //		Set<Role> role = roleRepo.findByRole("user");
 //		userDetails.setRoles(role);
 		userRepo.save(userDetails);
-		mailSender(userDetails.getEmail(),"Welcome to buid and beautify world buddy");
+		mailSender(userDetails.getEmail(),"Welcome ",userDetails.getName());
 		return response(HttpStatus.OK.value(), "user created successfully", userDetails);
 	}
 
-	public void mailSender(String emailId,String subject) {
-		SimpleMailMessage email = new SimpleMailMessage();
-		email.setFrom("shaping <kprabha10192@gamil.com>");
-		email.setSubject(subject);
-		email.setText("");
-		email.setTo(emailId);
-		mailSender.send(email);
+	public void mailSender(String emailId,String subject ,String name) throws MessagingException {
+//		SimpleMailMessage email = new SimpleMailMessage();
+//		email.setFrom("BuildAndBeautify <webrixtec@gamil.com>");
+//		email.setSubject(subject);
+//		email.setText("Hi"+ name +'\n'
+//				+ " thanks for choosing Srinivasaka Enterprises.  ");
+//		email.setTo(emailId);
+//		mailSender.send(email);
+		MimeMessage mimeMessage = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+		String htmlMsg = "Hi "+ name +"<br /> "+
+				" thanks for choosing<b> Srinivasaka Enterprises.</b>";
+//		mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
+		helper.setText(htmlMsg, true); // Use this or above line.
+		helper.setTo(emailId);
+		helper.setSubject(subject);
+		helper.setFrom("BuildAndBeautify <webrixtec@gamil.com>");
+		mailSender.send(mimeMessage);
 	}
 
 	public ResponseEntity<Object> getUserList() {

@@ -1,5 +1,6 @@
 package com.webrixtec.buildandbeautify.controller;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class UserController extends ExceptionController {
 	}
 	
 	@PostMapping(value = "/signup")
-	public ResponseEntity<Object> createUser(@Valid @RequestBody UserModel userModel){
+	public ResponseEntity<Object> createUser(@Valid @RequestBody UserModel userModel) throws MessagingException{
 		return userService.signUp(userModel);
 	}	
 	
