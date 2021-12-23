@@ -43,13 +43,13 @@ public class UserModel {
 	private String email;
 	@NotNull(message = "phone number must not be empty")
 	private String phone;
-	@NotNull(message = "GENDER must not be empty")
+//	@NotNull(message = "GENDER must not be empty")
 	private String gender;
-	@NotNull(message = "empolyee id must not be empty")
+//	@NotNull(message = "empolyee id must not be empty")
 	private String empId;
-	@NotNull(message = "Date of Birth must not be empty")
+//	@NotNull(message = "Date of Birth must not be empty")
 	private String dob;
-	@NotNull(message = "adharNo must not be empty")
+//	@NotNull(message = "adharNo must not be empty")
 	private String adharNo;
 	
 	private String rolename;

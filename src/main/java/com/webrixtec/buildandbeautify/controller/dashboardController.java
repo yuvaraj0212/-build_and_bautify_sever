@@ -43,12 +43,12 @@ public class dashboardController extends ExceptionController {
 	
 
 	@PostMapping(value = "/create-client")
-	public ResponseEntity<Object> createclient(@RequestBody clientModel productRequest) throws Exception {
+	public ResponseEntity<Object> createclient(@Valid @RequestBody clientModel productRequest) throws Exception {
 		return clientService.createClient(productRequest);
 	}
 
 	@PostMapping(value = "/update-client")
-	public ResponseEntity<Object> editClient(@RequestBody clientModel productRequest) throws IOException {
+	public ResponseEntity<Object> editClient(@Valid @RequestBody clientModel productRequest) throws IOException {
 		return clientService.updateclient(productRequest);
 	}
 

@@ -1,0 +1,52 @@
+{"properties": [
+  {
+    "name": "maximumPoolSize",
+    "type": "java.lang.String",
+    "description": "A description for 'maximumPoolSize'"
+  },
+  {
+    "name": "minimumIdle",
+    "type": "java.lang.String",
+    "description": "A description for 'minimumIdle'"
+  },
+  {
+    "name": "hikari",
+    "type": "java.lang.String",
+    "description": "A description for 'hikari'"
+  },
+  {
+    "name": "datasource",
+    "type": "java.lang.String",
+    "description": "A description for 'datasource'"
+  },
+  {
+    "name": "idleTimeout",
+    "type": "java.lang.String",
+    "description": "A description for 'idleTimeout'"
+  },
+  {
+    "name": "spring",
+    "type": "java.lang.String",
+    "description": "A description for 'spring'"
+  },
+  {
+    "name": "minimumIdle",
+    "type": "java.lang.String",
+    "description": "A description for 'minimumIdle'"
+  },
+  {
+    "name": "maximumPoolSize",
+    "type": "java.lang.String",
+    "description": "A description for 'maximumPoolSize'"
+  },
+  {
+    "name": "maximumPoolSize",
+    "type": "java.lang.String",
+    "description": "A description for 'maximumPoolSize'"
+  },
+  {
+    "name": "maximumPoolSize",
+    "type": "java.lang.String",
+    "description": "A description for 'maximumPoolSize'"
+  }
+]}

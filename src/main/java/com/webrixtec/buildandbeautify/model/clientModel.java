@@ -1,5 +1,8 @@
 package com.webrixtec.buildandbeautify.model;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,26 +18,70 @@ public class clientModel {
 	private Long id;
 	@NotEmpty(message="customername must not to be null")
 	private String customername;
-	@NotEmpty(message="type must not to be null")
+	
+//	@NotEmpty(message="type must not to be null")
 	private String type;
+	
 	@NotEmpty(message="phone must not to be null")
 	private String phone;
+	
+	@NotEmpty(message="handeld must not to be null")
+	private String handeld;
+	
+	public String getHandeld() {
+		return handeld;
+	}
+	public void setHandeld(String handeld) {
+		this.handeld = handeld;
+	}
 	@NotEmpty(message="email must not to be null")
 	private String email;
+	
 	@NotEmpty(message="lead must not to be null")
 	private String lead;
+	
 	@NotEmpty(message="category must not to be null")
-	private String category;
-	@NotEmpty(message="product must not to be null")
+	private ArrayList<String> category;
+	
+//	@NotEmpty(message="product must not to be null")
 	private String product;
-	@NotEmpty(message="address must not to be null")
+	
+//	@NotEmpty(message="address must not to be null")
 	private String address;
+	
 	@NotEmpty(message="quantity must not to be null")
 	private String quantity;
+	
 	@NotEmpty(message="comment must not to be null")
 	private String comment;
-	@NotEmpty(message="others must not to be null")
+	
+//	@NotEmpty(message="others must not to be null")
 	private String others;
+
+	private String phone2;
+	private Date createDate;
+	private Date modifiedDate;
+	
+	
+	
+	public String getPhone2() {
+		return phone2;
+	}
+	public void setPhone2(String phone2) {
+		this.phone2 = phone2;
+	}
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -71,10 +118,11 @@ public class clientModel {
 	public void setLead(String lead) {
 		this.lead = lead;
 	}
-	public String getCategory() {
+
+	public ArrayList<String> getCategory() {
 		return category;
 	}
-	public void setCategory(String category) {
+	public void setCategory(ArrayList<String> category) {
 		this.category = category;
 	}
 	public String getProduct() {
@@ -107,21 +155,14 @@ public class clientModel {
 	public void setOthers(String others) {
 		this.others = others;
 	}
-	public clientModel() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 	public clientModel(Long id, @NotEmpty(message = "customername must not to be null") String customername,
-			@NotEmpty(message = "type must not to be null") String type,
-			@NotEmpty(message = "phone must not to be null") String phone,
+			String type, @NotEmpty(message = "phone must not to be null") String phone,
 			@NotEmpty(message = "email must not to be null") String email,
 			@NotEmpty(message = "lead must not to be null") String lead,
-			@NotEmpty(message = "category must not to be null") String category,
-			@NotEmpty(message = "product must not to be null") String product,
-			@NotEmpty(message = "address must not to be null") String address,
-			@NotEmpty(message = "quantity must not to be null") String quantity,
-			@NotEmpty(message = "comment must not to be null") String comment,
-			@NotEmpty(message = "others must not to be null") String others) {
+			@NotEmpty(message = "category must not to be null") ArrayList<String> category, String product,
+			String address, @NotEmpty(message = "quantity must not to be null") String quantity,
+			@NotEmpty(message = "comment must not to be null") String comment, String others, String phone2,
+			Date createDate, Date modifiedDate) {
 		super();
 		this.id = id;
 		this.customername = customername;
@@ -135,7 +176,15 @@ public class clientModel {
 		this.quantity = quantity;
 		this.comment = comment;
 		this.others = others;
+		this.phone2 = phone2;
+		this.createDate = createDate;
+		this.modifiedDate = modifiedDate;
 	}
+	public clientModel() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 	
 
 }

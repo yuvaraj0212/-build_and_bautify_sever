@@ -21,11 +21,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.webrixtec.buildandbeautify.exception.ExceptionController;
-import com.webrixtec.buildandbeautify.model.Role;
 import com.webrixtec.buildandbeautify.model.UserModel;
 import com.webrixtec.buildandbeautify.pojo.LoginRequest;
 import com.webrixtec.buildandbeautify.pojo.ResetPassword;
-import com.webrixtec.buildandbeautify.repo.RoleRepo;
 import com.webrixtec.buildandbeautify.repo.UserRepo;
 import com.webrixtec.buildandbeautify.util.JwtUtils;
 
@@ -42,8 +40,6 @@ public class UserService extends ExceptionController {
 	UserRepo userRepo;
 	@Autowired
 	private JavaMailSender mailSender;
-	@Autowired
-	RoleRepo roleRepo;
 	
 	
 	
@@ -128,33 +124,45 @@ public class UserService extends ExceptionController {
 //		return response(HttpStatus.OK.value(), "user details updated successfully", userDetails);
 //	}
 //	
-//	public ResponseEntity<Object> forgotPassword(String emailId){
-//		UserModel userDetails = userRepo.findByEmail(emailId);
-//		if(userDetails == null) {
-//			return failure(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(),
-//					"User details are not avalaible");
-//		}
-//		mailSender(userDetails.getEmail(),"forgot password link");
-//		return response(HttpStatus.OK.value(),"reset password link has been to sent to your registered mail");
-//	}
-//	
-//	public ResponseEntity<Object> resetPassword(String emailId,ResetPassword resetPassword){
-//		UserModel userDetails = userRepo.findByEmail(emailId);
-//		if(userDetails == null) {
-//			return failure(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(),
-//					"User details are not avalaible");
-//		}
-//		if(!resetPassword.getPassword().equals(resetPassword.getConfirmPassword())) {
-//			return failure(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(),
-//					"password and confirm password not matched please check");
-//		}
-//		
-//		BCryptPasswordEncoder cryptPassword = new BCryptPasswordEncoder();
-//		userDetails.setPassword(cryptPassword.encode(resetPassword.getPassword()));
-//		userDetails.setConfirmpassword(cryptPassword.encode(resetPassword.getConfirmPassword()));
-//		userRepo.save(userDetails);
-//		return response(HttpStatus.OK.value(),"Password updated successfully");
-//	}
+	public ResponseEntity<Object> forgotPassword(String emailId) throws MessagingException{
+		UserModel userDetails = userRepo.findByEmail(emailId);
+		if(userDetails == null) {
+			return failure(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(),
+					"User details are not avalaible");
+		}
+//		mailSender(userDetails.getEmail(),"forgot password link",userDetails.getName());
+			
+		 MimeMessage mimeMessage  = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+		String htmlMsg = "Hi "+ userDetails.getName() +"<br /> "+
+				" thanks for choosing<b> Srinivasaka Enterprises.</b>"+"<br /> <a href=http://localhost:3.110.219.120/resetpassword:"+userDetails.getEmail()+
+				">click the link to change the password</a>";
+				
+				
+		helper.setText(htmlMsg, true); 
+		helper.setTo(userDetails.getEmail());
+		helper.setSubject("forgot password link");
+		mailSender.send(mimeMessage);
+		return response(HttpStatus.OK.value(),"reset password link has been to sent to your registered mail");
+	}
+
+	public ResponseEntity<Object> resetPassword(String emailId,ResetPassword resetPassword){
+		UserModel userDetails = userRepo.findByEmail(emailId);
+		if(userDetails == null) {
+			return failure(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(),
+					"User details are not avalaible");
+		}
+		if(!resetPassword.getPassword().equals(resetPassword.getConfirmPassword())) {
+			return failure(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(),
+					"password and confirm password not matched please check");
+		}
+		
+		BCryptPasswordEncoder cryptPassword = new BCryptPasswordEncoder();
+		userDetails.setPassword(cryptPassword.encode(resetPassword.getPassword()));
+		userDetails.setConfirmpassword(cryptPassword.encode(resetPassword.getConfirmPassword()));
+		userRepo.save(userDetails);
+		return response(HttpStatus.OK.value(),"Password updated successfully");
+	}
 	
 
 	

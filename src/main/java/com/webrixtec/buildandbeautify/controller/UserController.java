@@ -1,6 +1,7 @@
 package com.webrixtec.buildandbeautify.controller;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.webrixtec.buildandbeautify.exception.ExceptionController;
 import com.webrixtec.buildandbeautify.model.UserModel;
 import com.webrixtec.buildandbeautify.pojo.LoginRequest;
+import com.webrixtec.buildandbeautify.pojo.ResetPassword;
 import com.webrixtec.buildandbeautify.repo.UserRepo;
 import com.webrixtec.buildandbeautify.service.UserService;
 
@@ -43,16 +45,15 @@ public class UserController extends ExceptionController {
 	}
 
 	
-//	@GetMapping(value="/forget-password")
-//	public ResponseEntity<Object> forgotPassword(@RequestParam(name="emailId")String emailId){
-//		return userService.forgotPassword(emailId);
-//	}
-//	
-//	@PostMapping(value="/reset-password/{emailId}")
-//	public ResponseEntity<Object> resetPassword(@PathVariable("emailId")String emailId,@RequestBody @Valid ResetPassword resetPassword){
-//		return userService.resetPassword(emailId,resetPassword);
-//	}
+	@GetMapping(value="/forget-password")
+	public ResponseEntity<Object> forgotPassword(@RequestParam(name="emailId")String emailId) throws MessagingException{
+		return userService.forgotPassword(emailId );
+	}
 	
-//}
+	@PostMapping(value="/reset-password/{emailId}")
+	public ResponseEntity<Object> resetPassword(@PathVariable("emailId")String emailId,@RequestBody @Valid ResetPassword resetPassword){
+		return userService.resetPassword(emailId,resetPassword);
+	}
+	
 
 }

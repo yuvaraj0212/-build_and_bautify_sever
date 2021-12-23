@@ -2,6 +2,7 @@ package com.webrixtec.buildandbeautify.service;
 
 import java.awt.print.Pageable;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -44,15 +45,16 @@ public class clientService extends ExceptionController {
 	JwtUtils jwtUtils;
 
 	public ResponseEntity<Object> createClient(clientModel ClientRequest) {
-//		boolean productNameExists = clientRepo.existsByName(productRequest.getProductName());
-//		boolean productCodeExists = clientRepo.existsByCode(productRequest.getProductCode());
-//		if (productNameExists || productCodeExists) {
-//			return failure(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(),
-//					"product name/code already exists");
-//		} 
 		clientModel clientDetails =new clientModel();
 		clientDetails.setAddress(ClientRequest.getAddress());
-		clientDetails.setCategory(ClientRequest.getCategory());
+		
+		ArrayList<String> categoryList = new ArrayList<String>();
+		for(int i = 0;i < ClientRequest.getCategory().size(); i++) {
+			categoryList.add(ClientRequest.getCategory().get(i)+",");
+			System.out.println(ClientRequest.getCategory().get(i));
+		}
+		
+		clientDetails.setCategory(categoryList);
 		clientDetails.setComment(ClientRequest.getComment());
 		clientDetails.setCustomername(ClientRequest.getCustomername());
 		clientDetails.setEmail(ClientRequest.getEmail());
@@ -60,9 +62,13 @@ public class clientService extends ExceptionController {
 		clientDetails.setLead(ClientRequest.getLead());
 		clientDetails.setOthers(ClientRequest.getOthers());
 		clientDetails.setPhone(ClientRequest.getPhone());
+		clientDetails.setPhone2(ClientRequest.getPhone2());
 		clientDetails.setProduct(ClientRequest.getProduct());
 		clientDetails.setQuantity(ClientRequest.getQuantity());
 		clientDetails.setType(ClientRequest.getType());
+		clientDetails.setHandeld(ClientRequest.getHandeld());;
+		clientDetails.setCreateDate(new Date());
+		clientDetails.setModifiedDate(new Date());
 		
 		
 		clientRepo.save(clientDetails);
@@ -90,18 +96,27 @@ public class clientService extends ExceptionController {
 					"client details not available");
 		}
 		clientDetails.setAddress(ClientRequest.getAddress());
-		clientDetails.setCategory(ClientRequest.getCategory());
+		
+		ArrayList<String> categoryList = new ArrayList<String>();
+		for(int i = 0;i < ClientRequest.getCategory().size(); i++) {
+			categoryList.add(ClientRequest.getCategory().get(i)+",");
+			System.out.println(ClientRequest.getCategory().get(i));
+		}
+		
+		clientDetails.setCategory(categoryList);
 		clientDetails.setComment(ClientRequest.getComment());
 		clientDetails.setCustomername(ClientRequest.getCustomername());
 		clientDetails.setEmail(ClientRequest.getEmail());
 		clientDetails.setId(ClientRequest.getId());
+		clientDetails.setPhone2(ClientRequest.getPhone2());
 		clientDetails.setLead(ClientRequest.getLead());
+		clientDetails.setHandeld(ClientRequest.getHandeld());;
 		clientDetails.setOthers(ClientRequest.getOthers());
 		clientDetails.setPhone(ClientRequest.getPhone());
 		clientDetails.setProduct(ClientRequest.getProduct());
 		clientDetails.setQuantity(ClientRequest.getQuantity());
 		clientDetails.setType(ClientRequest.getType());
-		
+		clientDetails.setModifiedDate(new Date());
 		
 		clientRepo.save(clientDetails);
 		return response(HttpStatus.OK.value(), "client updated Succcessfully", clientDetails);
