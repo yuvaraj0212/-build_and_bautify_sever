@@ -97,8 +97,8 @@ public class UserService extends ExceptionController {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 		String htmlMsg = "Hi "+ name +"<br /> "+
-				" thanks for choosing<b> Srinivasaka Enterprises.</b>";
-//		mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
+				" Thanks for choosing<b> Srinivasaka Enterprises.</b><br /> "
+				+ "<img src='http://3.110.219.120/images/logo.png'/>";
 		helper.setText(htmlMsg, true); // Use this or above line.
 		helper.setTo(emailId);
 		helper.setSubject(subject);
@@ -135,7 +135,7 @@ public class UserService extends ExceptionController {
 		 MimeMessage mimeMessage  = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 		String htmlMsg = "Hi "+ userDetails.getName() +"<br /> "+
-				" thanks for choosing<b> Srinivasaka Enterprises.</b>"+"<br /> <a href=http://localhost:3.110.219.120/resetpassword:"+userDetails.getEmail()+
+				" thanks for choosing<b> Srinivasaka Enterprises.</b>"+"<br /> <a href=http://3.110.219.120/resetpassword:"+userDetails.getEmail()+
 				">click the link to change the password</a>";
 				
 				

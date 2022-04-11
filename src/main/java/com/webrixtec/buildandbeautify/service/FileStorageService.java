@@ -31,7 +31,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.example.demo.exception.ExceptionController;
+import com.webrixtec.buildandbeautify.exception.ExceptionController;
 import com.webrixtec.buildandbeautify.pojo.FileStorageProperties;
 
 @Service
@@ -41,10 +41,10 @@ public class FileStorageService extends ExceptionController{
 	@Value("${file.upload-dir}")
 	String filepath;
 
-	private final String endpointUrl="https://s3.ap-south-1.amazonaws.com";
-	private final String bucketName="pandiyanimages";
-	 private String accessKey ="AKIA5YUW2VZ5MHF4RXW3";
-	 private String secretKey="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";
+	private final String endpointUrl="https://buildandbeautify.s3.ap-south-1.amazonaws.com";
+	private final String bucketName="buildandbeautify";
+	 private String accessKey ="AKIA2RJHWFHFI57K4NOS";
+	 private String secretKey="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";
 	 
 	 
 	  private AmazonS3 s3client;

@@ -44,8 +44,8 @@ public class loginClientService extends ExceptionController{
 	@Autowired
 	FileStorageService FileStorageService;
 	
-	public static final String ACCOUNT_SID = "AC9706cc99cfa46154daf86cf479efe8bf";
-	public static final String AUTH_TOKEN = "0cce23c115d62e3ca34665c9f16bdcdb";
+	public static final String ACCOUNT_SID = "ACb836d8b8dd2f619e91253731498b3c8c";
+	public static final String AUTH_TOKEN = "2e62967715dea11b3098104848a5b3c1";
 	int notifycation = 0;
 	public ResponseEntity<Object> createEnquiry(clientdashboardRequest productRequest) throws MessagingException {
 		
@@ -62,7 +62,6 @@ public class loginClientService extends ExceptionController{
 		}
 		
 		LCM.setCategory(categoryList);
-		System.out.println(categoryList);
 		LCM.setQuantity(productRequest.getQuantity());
 		LCM.setOther(productRequest.getOther());
 		LCM.setCreateDate(new Date());
@@ -81,20 +80,20 @@ public class loginClientService extends ExceptionController{
 		mailSender.send(mimeMessage);
 		
 		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-        Message message = Message.creator(
+		Message message = Message.creator(
                 new com.twilio.type.PhoneNumber("+91"+user.getPhone()),
-                new com.twilio.type.PhoneNumber("+17279105894"),
-                "your Enqurie added succesFully.Thanks for choosing Srinivasaka Enterprises.")
+                new com.twilio.type.PhoneNumber("(845) 668-6401"),
+                "your Enqurie added succesFully.Thanks for choosing Srinivasaka Enterprises. http://wa.me/+14155238886?text=join%20sing-from")
             .create();
 
         System.out.println(message);
 //    	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 //        Message message1 = Message.creator(
-//        		   new com.twilio.type.PhoneNumber("whatsapp:+917092327466"), 
-//                   new com.twilio.type.PhoneNumber("whatsapp:+17279105894"),  
+//        		   new com.twilio.type.PhoneNumber("whatsapp:+91"+user.getPhone()), 
+//                   new com.twilio.type.PhoneNumber("whatsapp:+14155238886"),  
 //                   "Your appointment is coming up on July 21 at 3PM")
 //            .create();
-//        System.out.println(message1.getSid());
+//        System.out.println(message1);
 		return response(HttpStatus.OK.value(), "Enquiry added Succcessfully", LCM);
 	}
 
@@ -109,9 +108,7 @@ public class loginClientService extends ExceptionController{
 	}
 
 	public ResponseEntity<Object> delnotify() {
-		System.out.println(notifycation	);
 		notifycation = 0;
-		System.out.println(notifycation	);
 		return response(HttpStatus.OK.value(), "notify No:", notifycation);
 	}
 
@@ -133,6 +130,13 @@ public class loginClientService extends ExceptionController{
 		serviceModel.setModifiedDate(new Date());
 		CSR.save(serviceModel);
 		return response(HttpStatus.OK.value(), "Request added Succcessfully", serviceModel);
+		
+	}
+
+	public ResponseEntity<Object> getService() {
+			List<ClientServiceModel> Service = CSR.findAll();
+			Collections.reverse( Service);
+			return response(HttpStatus.OK.value(), "Service list", Service); 
 		
 	}
 
