@@ -8,8 +8,8 @@ import javax.validation.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-@Table(name = "client_service")
-public class ClientServiceModel {
+@Table(name = "tbl_ServiceRequest")
+public class ServiceRequest {
 
 	@Id
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)
@@ -27,6 +27,15 @@ public class ClientServiceModel {
 	private String comment;
 	private String filename;
 	private String imageURL;
+//	private byte[] imageURL;
+	
+	
+//	public byte[] getImageURL() {
+//		return imageURL;
+//	}
+//	public void setImageURL(byte[] imageURL) {
+//		this.imageURL = imageURL;
+//	}
 	@Transient
 	private MultipartFile mfile;
 	private Date createDate;

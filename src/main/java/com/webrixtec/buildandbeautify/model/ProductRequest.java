@@ -17,8 +17,8 @@ import antlr.collections.List;
 
 
 @Entity
-@Table(name="login_client_Model")
-public class loginCleintModel {
+@Table(name="tbl_ProductRequest")
+public class ProductRequest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -35,6 +35,9 @@ public class loginCleintModel {
 		private String quantity;
 		private String other;
 		private String product2;
+
+		private String refName;
+		private String refNo;
 		private Date createDate;
 		private Date modifiedDate;
 		
@@ -64,6 +67,18 @@ public class loginCleintModel {
 		}
 		
 		
+		public String getRefName() {
+			return refName;
+		}
+		public void setRefName(String refName) {
+			this.refName = refName;
+		}
+		public String getRefNo() {
+			return refNo;
+		}
+		public void setRefNo(String refNo) {
+			this.refNo = refNo;
+		}
 		public ArrayList<String> getCategory() {
 			return category;
 		}
@@ -100,7 +115,7 @@ public class loginCleintModel {
 		public void setModifiedDate(Date modifiedDate) {
 			this.modifiedDate = modifiedDate;
 		}
-		public loginCleintModel() {
+		public ProductRequest() {
 			super();
 			this.id = id;
 			this.userModel = userModel;

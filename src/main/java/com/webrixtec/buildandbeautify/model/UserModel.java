@@ -27,8 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @Entity
-@Table(name = "user_Table")
-
+@Table(name = "tbl_user")
 public class UserModel {
 
 	@Id
@@ -39,7 +38,7 @@ public class UserModel {
 	@NotNull(message = "password must not be empty")
 	private String password;
 	private String confirmpassword;
-	@NotNull(message = "email must not be empty")
+//	@NotNull(message = "email must not be empty")
 	private String email;
 	@NotNull(message = "phone number must not be empty")
 	private String phone;
@@ -52,20 +51,20 @@ public class UserModel {
 //	@NotNull(message = "adharNo must not be empty")
 	private String adharNo;
 	
-	private String rolename;
-//	@ManyToMany(fetch = FetchType.EAGER)
-//	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-//	private Set<Role> roles = new HashSet<>();
+//	private String rolename;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "tbl_users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles= new HashSet<>();
 	private String token;
 	
 	
-	@NotNull(message = "rolename must not be empty")
-	public String getRolename() {
-		return rolename;
-	}
-	public void setRolename(String rolename) {
-		this.rolename = rolename;
-	}
+//	@NotNull(message = "rolename must not be empty")
+//	public String getRolename() {
+//		return rolename;
+//	}
+//	public void setRolename(String rolename) {
+//		this.rolename = rolename;
+//	}
 	public Long getId() {
 		return id;
 	}
@@ -132,14 +131,14 @@ public class UserModel {
 	public void setToken(String token) {
 		this.token = token;
 	}
-//	public Set<Role> getRoles() {
-//		return roles;
-//	}
-//
-//	public void setRoles(Set<Role> roles) {
-//		this.roles = roles;
-//	
-//	}
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	
+	}
 	
 	
 }

@@ -7,16 +7,18 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LoginRequest {
 	@NotNull(message = "username must not to be null")
-	private String email;
+	private String phone;
 	@NotNull(message = "password must not to be null")
 	private String password;
 
-	public String getEmail() {
-		return email;
+	
+
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getPassword() {

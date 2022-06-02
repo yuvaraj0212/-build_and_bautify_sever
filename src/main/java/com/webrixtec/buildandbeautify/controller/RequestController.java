@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.webrixtec.buildandbeautify.exception.ExceptionController;
-import com.webrixtec.buildandbeautify.model.clientModel;
-import com.webrixtec.buildandbeautify.model.loginCleintModel;
+import com.webrixtec.buildandbeautify.model.AddCustomerRequest;
+import com.webrixtec.buildandbeautify.model.ProductRequest;
 import com.webrixtec.buildandbeautify.pojo.clientdashboardRequest;
-import com.webrixtec.buildandbeautify.service.loginClientService;
+import com.webrixtec.buildandbeautify.service.Request;
 
 @RestController
 @CrossOrigin
-public class clientController extends ExceptionController {
+public class RequestController extends ExceptionController {
 	
 	@Autowired
-	loginClientService LCS;
+	Request LCS;
 	
 	@PostMapping(value = "/create-client-enquiry")
 	public ResponseEntity<Object> createEnquiry(@Valid @RequestBody clientdashboardRequest productRequest) throws Exception {

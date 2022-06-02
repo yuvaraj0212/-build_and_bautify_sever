@@ -21,9 +21,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.webrixtec.buildandbeautify.exception.ExceptionController;
+import com.webrixtec.buildandbeautify.model.Role;
 import com.webrixtec.buildandbeautify.model.UserModel;
 import com.webrixtec.buildandbeautify.pojo.LoginRequest;
 import com.webrixtec.buildandbeautify.pojo.ResetPassword;
+import com.webrixtec.buildandbeautify.repo.Rolerepo;
 import com.webrixtec.buildandbeautify.repo.UserRepo;
 import com.webrixtec.buildandbeautify.util.JwtUtils;
 
@@ -39,27 +41,29 @@ public class UserService extends ExceptionController {
 	@Autowired
 	UserRepo userRepo;
 	@Autowired
+	Rolerepo roleRepo;
+	@Autowired
 	private JavaMailSender mailSender;
 	
 	
 	
 	public ResponseEntity<Object> signin(LoginRequest loginRequest) {
 		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+				new UsernamePasswordAuthenticationToken(loginRequest.getPhone(), loginRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		UserModel user = userRepo.findById(userDetails.getId()).orElseThrow(() -> new RuntimeException("user not found"));
 		user.setToken(jwt);
-		return response(HttpStatus.OK.value(), " login successfully", user);
+		return response(HttpStatus.OK.value(), "login successfully", user);
 	}
 
 	public ResponseEntity<Object> signUp(UserModel userModel) throws MessagingException {
 		UserModel userDetails = new UserModel();
-		boolean emailExists = userRepo.existsByEmail(userModel.getEmail());
-		if (emailExists) {
+		boolean phoneExists = userRepo.existsByPhone(userModel.getPhone());
+		if (phoneExists) {
 			return failure(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(),
-					"Email ID already exists");
+					"Phone number already exists");
 		}
 		if(!userModel.getPassword().equals(userModel.getConfirmpassword())) {
 			return failure(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(),
@@ -76,11 +80,11 @@ public class UserService extends ExceptionController {
 		userDetails.setDob(userModel.getDob());
 		userDetails.setEmpId(userModel.getEmpId());
 		userDetails.setGender(userModel.getGender());
-		userDetails.setRolename(userModel.getRolename());
+//		userDetails.setRolename(userModel.getRolename());
 //		userDetails.setCreatedDate(new Date());
 //		userDetails.setModifiedDate(new Date());
-//		Set<Role> role = roleRepo.findByRole("user");
-//		userDetails.setRoles(role);
+		Set<Role> role = roleRepo.findByRoleName("ROLE_USER");
+		userDetails.setRoles(role);
 		userRepo.save(userDetails);
 		mailSender(userDetails.getEmail(),"Welcome ",userDetails.getName());
 		return response(HttpStatus.OK.value(), "user created successfully", userDetails);

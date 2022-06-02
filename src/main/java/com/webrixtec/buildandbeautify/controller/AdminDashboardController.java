@@ -25,30 +25,30 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.webrixtec.buildandbeautify.exception.ExceptionController;
-import com.webrixtec.buildandbeautify.model.clientModel;
+import com.webrixtec.buildandbeautify.model.AddCustomerRequest;
 import com.webrixtec.buildandbeautify.repo.clientRepo;
-import com.webrixtec.buildandbeautify.service.clientService;
+import com.webrixtec.buildandbeautify.service.AdminRequest;
 
 
 
 
 @RestController
 @CrossOrigin
-public class dashboardController extends ExceptionController {
+public class AdminDashboardController extends ExceptionController {
 
 	@Autowired
 	clientRepo clientRepo;
 	@Autowired
-	clientService clientService;
+	AdminRequest clientService;
 	
 
 	@PostMapping(value = "/create-client")
-	public ResponseEntity<Object> createclient(@Valid @RequestBody clientModel productRequest) throws Exception {
+	public ResponseEntity<Object> createclient(@Valid @RequestBody AddCustomerRequest productRequest) throws Exception {
 		return clientService.createClient(productRequest);
 	}
 
 	@PostMapping(value = "/update-client")
-	public ResponseEntity<Object> editClient(@Valid @RequestBody clientModel productRequest) throws IOException {
+	public ResponseEntity<Object> editClient(@Valid @RequestBody AddCustomerRequest productRequest) throws IOException {
 		return clientService.updateclient(productRequest);
 	}
 

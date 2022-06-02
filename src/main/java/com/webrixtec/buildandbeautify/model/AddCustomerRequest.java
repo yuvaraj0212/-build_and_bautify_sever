@@ -11,8 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name="client_table")
-public class clientModel {
+@Table(name="tbl_customer")
+public class AddCustomerRequest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -34,7 +34,7 @@ public class clientModel {
 	public void setHandeld(String handeld) {
 		this.handeld = handeld;
 	}
-	@NotEmpty(message="email must not to be null")
+//	@NotEmpty(message="email must not to be null")
 	private String email;
 	
 	@NotEmpty(message="lead must not to be null")
@@ -57,13 +57,30 @@ public class clientModel {
 	
 //	@NotEmpty(message="others must not to be null")
 	private String others;
-
+	@NotEmpty(message="Area must not to be null")
+	private String area;
+	@NotEmpty(message="pincode must not to be null")
+	private String pincode;
+	
 	private String phone2;
 	private Date createDate;
 	private Date modifiedDate;
 	
 	
 	
+	
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
+	}
+	public String getPincode() {
+		return pincode;
+	}
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
 	public String getPhone2() {
 		return phone2;
 	}
@@ -155,7 +172,7 @@ public class clientModel {
 	public void setOthers(String others) {
 		this.others = others;
 	}
-	public clientModel(Long id, @NotEmpty(message = "customername must not to be null") String customername,
+	public AddCustomerRequest(Long id, @NotEmpty(message = "customername must not to be null") String customername,
 			String type, @NotEmpty(message = "phone must not to be null") String phone,
 			@NotEmpty(message = "email must not to be null") String email,
 			@NotEmpty(message = "lead must not to be null") String lead,
@@ -180,7 +197,7 @@ public class clientModel {
 		this.createDate = createDate;
 		this.modifiedDate = modifiedDate;
 	}
-	public clientModel() {
+	public AddCustomerRequest() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

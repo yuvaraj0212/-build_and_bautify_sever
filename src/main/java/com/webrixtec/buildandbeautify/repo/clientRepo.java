@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.webrixtec.buildandbeautify.model.clientModel;
+import com.webrixtec.buildandbeautify.model.AddCustomerRequest;
 
 @Repository
-public interface clientRepo extends JpaRepository<clientModel, Long> {
+public interface clientRepo extends JpaRepository<AddCustomerRequest, Long> {
 
 //	boolean existsByCode(String productCode);
 //

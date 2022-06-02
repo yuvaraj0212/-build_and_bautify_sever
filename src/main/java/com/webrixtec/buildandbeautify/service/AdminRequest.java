@@ -28,14 +28,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.webrixtec.buildandbeautify.exception.ExceptionController;
 import com.webrixtec.buildandbeautify.model.UserModel;
-import com.webrixtec.buildandbeautify.model.clientModel;
+import com.webrixtec.buildandbeautify.model.AddCustomerRequest;
 import com.webrixtec.buildandbeautify.pojo.LoginRequest;
 import com.webrixtec.buildandbeautify.repo.clientRepo;
 import com.webrixtec.buildandbeautify.util.JwtUtils;
 
 
 @Service
-public class clientService extends ExceptionController {
+public class AdminRequest extends ExceptionController {
 
 	@Autowired
 	clientRepo clientRepo;
@@ -44,8 +44,8 @@ public class clientService extends ExceptionController {
 	@Autowired
 	JwtUtils jwtUtils;
 
-	public ResponseEntity<Object> createClient(clientModel ClientRequest) {
-		clientModel clientDetails =new clientModel();
+	public ResponseEntity<Object> createClient(AddCustomerRequest ClientRequest) {
+		AddCustomerRequest clientDetails =new AddCustomerRequest();
 		clientDetails.setAddress(ClientRequest.getAddress());
 		
 		ArrayList<String> categoryList = new ArrayList<String>();
@@ -60,6 +60,8 @@ public class clientService extends ExceptionController {
 		clientDetails.setEmail(ClientRequest.getEmail());
 		clientDetails.setId(ClientRequest.getId());
 		clientDetails.setLead(ClientRequest.getLead());
+		clientDetails.setArea(ClientRequest.getArea());
+		clientDetails.setPincode(ClientRequest.getPincode());
 		clientDetails.setOthers(ClientRequest.getOthers());
 		clientDetails.setPhone(ClientRequest.getPhone());
 		clientDetails.setPhone2(ClientRequest.getPhone2());
@@ -78,19 +80,19 @@ public class clientService extends ExceptionController {
 	
 
 	public ResponseEntity<Object> getProductList() {
-		List<clientModel> productList = clientRepo.findAll();
+		List<AddCustomerRequest> productList = clientRepo.findAll();
 		Collections.reverse(productList);
 		return response(HttpStatus.OK.value(), "client list", productList);
 	}
 
 
 
-	public ResponseEntity<Object> updateclient( clientModel ClientRequest) {
+	public ResponseEntity<Object> updateclient( AddCustomerRequest ClientRequest) {
 		if (ClientRequest.getId() == null) {
 			return failure(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(),
 					"client id must not to be null");
 		}
-		clientModel clientDetails = clientRepo.findById(ClientRequest.getId()).get();
+		AddCustomerRequest clientDetails = clientRepo.findById(ClientRequest.getId()).get();
 		if(clientDetails == null) {
 			return failure(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(),
 					"client details not available");
@@ -125,7 +127,7 @@ public class clientService extends ExceptionController {
 
 
 	public ResponseEntity<Object> deleteClient(Long clientId) {
-		clientModel clientDetail = clientRepo.findById(clientId).get();
+		AddCustomerRequest clientDetail = clientRepo.findById(clientId).get();
 		if (clientDetail == null) {
 			return failure(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(),
 					"Please check the Client details");

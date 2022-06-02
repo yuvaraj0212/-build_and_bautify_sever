@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.webrixtec.buildandbeautify.exception.ExceptionController;
 import com.webrixtec.buildandbeautify.pojo.clientServicePojo;
 import com.webrixtec.buildandbeautify.repo.clientServiceRepo;
-import com.webrixtec.buildandbeautify.service.loginClientService;
+import com.webrixtec.buildandbeautify.service.Request;
 
 @RestController
 @CrossOrigin
-public class clientServiceController extends ExceptionController {
+public class ServiceController extends ExceptionController {
 	@Autowired
-	loginClientService LCS;
+	Request LCS;
 	@Autowired
 	clientServiceRepo CSR;
 	

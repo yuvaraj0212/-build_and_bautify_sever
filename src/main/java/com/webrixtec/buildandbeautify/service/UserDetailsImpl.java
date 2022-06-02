@@ -16,7 +16,7 @@ import com.webrixtec.buildandbeautify.model.UserModel;
 public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private String email;
+	private String phone;
 	private String username;
 	private String role;
 	@JsonIgnore
@@ -27,25 +27,25 @@ public class UserDetailsImpl implements UserDetails {
 
 
 
-	public UserDetailsImpl(Long id,String username, String password, String email
-//			,Collection<? extends GrantedAuthority> authorities
+	public UserDetailsImpl(Long id,String username, String password, String phone
+			,Collection<? extends GrantedAuthority> authorities
 			) {
 		this.id = id;
-		this.username = email;
+		this.username = username;
 		this.password = password;
-		this.email=email;
-//		this.authorities = authorities;
+		this.phone=phone;
+		this.authorities = authorities;
 	}
 
 	public static UserDetails build(UserModel user) {
-//		List<GrantedAuthority> authorities = user.getRoles().stream()
-//				.map(role -> new SimpleGrantedAuthority(role.getRolename()))
-//				.collect(Collectors.toList());
+		List<GrantedAuthority> authorities = user.getRoles().stream()
+				.map(role -> new SimpleGrantedAuthority(role.getRoleName()))
+				.collect(Collectors.toList());
 		return new UserDetailsImpl(user.getId(), 
 				user.getName(), 
 				user.getPassword(),
-				user.getEmail()
-//				authorities
+				user.getPhone(),
+				authorities
 				);
 	}
 //	public static UserDetails build(Long id,String email, String password, String username, String role) {
@@ -77,8 +77,8 @@ public class UserDetailsImpl implements UserDetails {
 		return username;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getPhone() {
+		return phone;
 	}
 
 	@Override

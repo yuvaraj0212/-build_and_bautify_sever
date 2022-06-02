@@ -20,10 +20,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Override
 	@Transactional
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserModel user = repo.findByEmail(username);
+	public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
+		UserModel user = repo.findByPhone(phone);
 		if (user == null) {
-			throw new UsernameNotFoundException("User not exist with name : " + username);
+			throw new UsernameNotFoundException("User not exist with mobile number : " + phone);
 		}
 		return UserDetailsImpl.build(user);
 	}

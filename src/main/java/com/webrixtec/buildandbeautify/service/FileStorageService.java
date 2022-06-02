@@ -1,5 +1,6 @@
 package com.webrixtec.buildandbeautify.service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,6 +11,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
+import java.util.zip.DataFormatException;
+import java.util.zip.Deflater;
+import java.util.zip.Inflater;
 
 import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
@@ -41,10 +45,10 @@ public class FileStorageService extends ExceptionController{
 	@Value("${file.upload-dir}")
 	String filepath;
 
-	private final String endpointUrl="https://buildandbeautify.s3.ap-south-1.amazonaws.com";
-	private final String bucketName="buildandbeautify";
-	 private String accessKey ="AKIA2RJHWFHFI57K4NOS";
-	 private String secretKey="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";
+	private final String endpointUrl="https://buildandbeautif.s3.ap-south-1.amazonaws.com";
+	private final String bucketName="buildandbeautif";
+	 private String accessKey ="AKIAQRLOY2UHIVLJ3M67";
+	 private String secretKey="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";
 	 
 	 
 	  private AmazonS3 s3client;
@@ -150,7 +154,8 @@ public class FileStorageService extends ExceptionController{
 		        try {
 		            File file = convertMultiPartToFile(multipartFile);
 		            String fileName = generateFileName(multipartFile);
-		            fileUrl = endpointUrl + "/" + bucketName + "/"+folderName+"/" + fileName;
+//		            fileUrl = endpointUrl + "/" + bucketName + "/"+folderName+"/" + fileName;
+		            fileUrl = endpointUrl +  "/"+folderName+"/" + fileName;
 		            uploadFileTos3bucket(fileName, file,folderName);
 		            file.delete();
 		        } catch (Exception e) {
@@ -174,4 +179,42 @@ public class FileStorageService extends ExceptionController{
 		        s3client.putObject(new PutObjectRequest(bucketName, folderName+"/"+fileName, file)
 		                .withCannedAcl(CannedAccessControlList.PublicRead));
 		    }
+		    
+		 // compress the image bytes before storing it in the database
+			public  byte[] compressBytes(byte[] data) {
+				Deflater deflater = new Deflater();
+				deflater.setInput(data);
+				deflater.finish();
+				ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+				byte[] buffer = new byte[1024];
+				while (!deflater.finished()) {
+					int count = deflater.deflate(buffer);
+					outputStream.write(buffer, 0, count);
+				}
+				try {
+					outputStream.close();
+				} catch (IOException e) {
+				}
+				System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
+
+				return outputStream.toByteArray();
+			}
+			
+			// uncompress the image bytes before returning it to the angular application
+			public  byte[] decompressBytes(byte[] data) {
+				Inflater inflater = new Inflater();
+				inflater.setInput(data);
+				ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+				byte[] buffer = new byte[1024];
+				try {
+					while (!inflater.finished()) {
+						int count = inflater.inflate(buffer);
+						outputStream.write(buffer, 0, count);
+					}
+					outputStream.close();
+				} catch (IOException ioe) {
+				} catch (DataFormatException e) {
+				}
+				return outputStream.toByteArray();
+			}
 }

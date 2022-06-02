@@ -20,6 +20,8 @@ public class clientdashboardRequest {
 	@NotEmpty(message="quantity must not to be null")
 	private String quantity;
 	private String other;
+	private String refName;
+	private String refNo;
 	private String product2;
 	private Date createDate;
 	private Date modifiedDate;
@@ -79,6 +81,18 @@ public class clientdashboardRequest {
 	}
 	public void setProduct2(String product2) {
 		this.product2 = product2;
+	}
+	public String getRefName() {
+		return refName;
+	}
+	public void setRefName(String refName) {
+		this.refName = refName;
+	}
+	public String getRefNo() {
+		return refNo;
+	}
+	public void setRefNo(String refNo) {
+		this.refNo = refNo;
 	}
 	
 	
