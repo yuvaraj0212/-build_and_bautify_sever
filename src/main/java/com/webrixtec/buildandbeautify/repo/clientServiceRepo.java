@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.webrixtec.buildandbeautify.model.ServiceRequest;
 
 @Repository
-public interface clientServiceRepo extends JpaRepository<ServiceRequest, Long> {
+public interface clientServiceRepo extends JpaRepository<ServiceRequest, Integer> {
 
 }

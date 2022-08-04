@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class clientServicePojo {
 
-	
+	private int id;
 	private Long clientId;
 	@NotEmpty(message="product name must not to be null")
 	private String productName;
@@ -17,6 +17,10 @@ public class clientServicePojo {
 	private String billno;
 	@NotEmpty(message="comment must not to be null")
 	private String comment;
+	private String desc;
+	private int status;
+	
+	
 	public Long getClientId() {
 		return clientId;
 	}
@@ -55,6 +59,26 @@ public class clientServicePojo {
 	}
 	@Transient
 	private MultipartFile mfile;
+
+
+	public String getDesc() {
+		return desc;
+	}
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	
 }

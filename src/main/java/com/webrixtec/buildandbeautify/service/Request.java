@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -31,6 +32,7 @@ import com.webrixtec.buildandbeautify.model.ServiceRequest;
 import com.webrixtec.buildandbeautify.model.UserModel;
 import com.webrixtec.buildandbeautify.model.ProductRequest;
 import com.webrixtec.buildandbeautify.pojo.clientServicePojo;
+import com.webrixtec.buildandbeautify.pojo.clientServiceUpdatePojo;
 import com.webrixtec.buildandbeautify.pojo.clientdashboardRequest;
 import com.webrixtec.buildandbeautify.repo.LoginClientRepo;
 import com.webrixtec.buildandbeautify.repo.UserRepo;
@@ -55,6 +57,7 @@ public class Request extends ExceptionController {
 	public static final String ACCOUNT_SID = "ACb836d8b8dd2f619e91253731498b3c8c";
 	public static final String AUTH_TOKEN = "2e62967715dea11b3098104848a5b3c1";
 	int notifycation = 0;
+	int serviceNotify = 0;
 
 	public ResponseEntity<Object> createEnquiry(clientdashboardRequest productRequest) throws MessagingException {
 
@@ -136,6 +139,7 @@ public class Request extends ExceptionController {
 		serviceModel.setProductName(request.getProductName());
 		serviceModel.setService(request.getService());
 		serviceModel.setFilename(request.getMfile().getOriginalFilename());
+		serviceNotify+=1;
 //		// local save Images
 //		String f = Path.of(dir, request.getMfile().getOriginalFilename()).toString();
 //		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(f)));
@@ -158,6 +162,40 @@ public class Request extends ExceptionController {
 		Collections.reverse(Service);
 		return response(HttpStatus.OK.value(), "Service list", Service);
 
+	}
+
+	public ResponseEntity<Object> updateService(@Valid clientServiceUpdatePojo request) {
+
+		ServiceRequest serviceModel = CSR.findById(request.getId()).get();
+		if (serviceModel == null) {
+			return failure(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(),
+					"service Id is empty");
+		}
+		serviceModel.setStatus(request.getStatus());
+		serviceModel.setDesc(request.getDesc());
+//		// local save Images
+//		String f = Path.of(dir, request.getMfile().getOriginalFilename()).toString();
+//		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(f)));
+//		stream.write(request.getMfile().getBytes());
+//		stream.close();
+//		System.err.println(f);
+//		serviceModel.setImageURL(f);
+		
+
+//		serviceModel.setImageURL(FileStorageService.uploadFile(request.getMfile(),"bill"));
+//		serviceModel.setCreateDate(new Date());
+		serviceModel.setModifiedDate(new Date());
+		CSR.save(serviceModel);
+		return response(HttpStatus.OK.value(), "Request updated Succcessfully", serviceModel);
+	}
+	
+	public ResponseEntity<Object> getServicenotify() {
+		return response(HttpStatus.OK.value(), "notify No:", serviceNotify);
+	}
+
+	public ResponseEntity<Object> delSerivcenotify() {
+		serviceNotify = 0;
+		return response(HttpStatus.OK.value(), "notify No:", serviceNotify);
 	}
 
 }

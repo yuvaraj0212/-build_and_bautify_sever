@@ -13,7 +13,7 @@ public class ServiceRequest {
 
 	@Id
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)
-	private long id;
+	private int id;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "clientId", nullable = false, referencedColumnName = "id")
 	private UserModel userModel;
@@ -27,6 +27,8 @@ public class ServiceRequest {
 	private String comment;
 	private String filename;
 	private String imageURL;
+	private String desc;
+	private int status;
 //	private byte[] imageURL;
 	
 	
@@ -40,7 +42,20 @@ public class ServiceRequest {
 	private MultipartFile mfile;
 	private Date createDate;
 	private Date modifiedDate;
-
+	
+	
+	public String getDesc() {
+		return desc;
+	}
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -61,10 +76,10 @@ public class ServiceRequest {
 	public void setUserModel(UserModel userModel) {
 		this.userModel = userModel;
 	}
-	public long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getProductName() {
